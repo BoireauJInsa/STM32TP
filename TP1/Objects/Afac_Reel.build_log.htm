@@ -17,25 +17,21 @@ Library Manager: ArmAr.exe V5.06 update 7 (build 960)
 Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
 CPU DLL:         SARMCM3.DLL V5.34.0.0
 Dialog DLL:      DARMSTM.DLL V1.68.0.0
-Target DLL:      UL2CM3.DLL V1.163.9.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.8.0
 Dialog DLL:      TARMSTM.DLL V1.66.0.0
  
 <h2>Project:</h2>
 U:\Windows\Bureau\STM32\STM32TP\TP1\Afac.uvprojx
-Project File Date:  09/19/2023
+Project File Date:  09/26/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
-Rebuild target 'Simu'
-assembling startup_stm32f10x_md.s...
+Build target 'Reel'
 compiling Principal.c...
-Source\Principal.c(12): error:  #20: identifier "GPIO_IDR_ID" is undefined
-  	int bp_on = GPIOA->IDR & GPIO_IDR_ID ;
-Source\Principal.c(19): warning:  #1-D: last line of file ends without a newline
-  }
-Source\Principal.c: 1 warning, 1 error
-compiling system_stm32f10x.c...
-".\Objects\Afac_Simu.axf" - 1 Error(s), 1 Warning(s).
+Source\Principal.c(2): error:  #5: cannot open source input file "Driver_GPIO.c": No such file or directory
+  #include "Driver_GPIO.c"
+Source\Principal.c: 0 warnings, 1 error
+".\Objects\Afac_Reel.axf" - 1 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -53,7 +49,7 @@ Package Vendor: Keil
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\Device\STM32F103RB
-  .\RTE\_Simu
+  .\RTE\_Reel
   C:\Programdata\Keil\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
   C:\Programdata\Keil\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
 
@@ -67,7 +63,7 @@ Package Vendor: Keil
       Include file:  RTE_Driver\Config\RTE_Device.h
       Source file:   Device\Source\ARM\STM32F1xx_OPT.s
 Target not created.
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
