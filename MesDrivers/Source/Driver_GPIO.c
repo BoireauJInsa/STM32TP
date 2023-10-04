@@ -25,45 +25,45 @@ void MyGPIO_Init (MyGPIO_Struct_TypeDef * GPIOStructPtr) {
 	// Détermination CRH/CRL 
 	if(GPIOStructPtr->GPIO_Pin < 8)
 	{
-		GPIOStructPtr->GPIO->CRL &= ~(0xF << GPIOStructPtr->GPIO_Pin*4);
-	
-	if (GPIOStructPtr->GPIO_Conf == In_PullUp)
-	{
-	//Pullup : bit ODR correspondant à 1
-		MyGPIO_Set(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
-		GPIOStructPtr->GPIO->CRL |= (In_PullDown << GPIOStructPtr->GPIO_Pin*4);
-	}
-	else if (GPIOStructPtr->GPIO_Conf == In_PullDown)
-	{
-	//Pulldown : bit ODR correspondant à 0
-		MyGPIO_Reset(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
-		GPIOStructPtr->GPIO->CRL |= (In_PullDown << GPIOStructPtr->GPIO_Pin*4);
+			GPIOStructPtr->GPIO->CRL &= ~(0xF << GPIOStructPtr->GPIO_Pin*4);
+		
+			if (GPIOStructPtr->GPIO_Conf == In_PullUp)
+			{
+					//Pullup : bit ODR correspondant à 1
+					MyGPIO_Set(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
+					GPIOStructPtr->GPIO->CRL |= (In_PullDown << GPIOStructPtr->GPIO_Pin*4);
+			}
+			else if (GPIOStructPtr->GPIO_Conf == In_PullDown)
+			{
+					//Pulldown : bit ODR correspondant à 0
+					MyGPIO_Reset(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
+					GPIOStructPtr->GPIO->CRL |= (In_PullDown << GPIOStructPtr->GPIO_Pin*4);
+			}
+			else
+			{
+				GPIOStructPtr->GPIO->CRL |= (GPIOStructPtr->GPIO_Conf << GPIOStructPtr->GPIO_Pin*4);
+			}
 	}
 	else
 	{
-		GPIOStructPtr->GPIO->CRL |= (GPIOStructPtr->GPIO_Conf << GPIOStructPtr->GPIO_Pin*4);
-	}
-	}
-	else
-	{
-		GPIOStructPtr->GPIO->CRH &= ~(0xF << ((GPIOStructPtr->GPIO_Pin-8)*4));
+			GPIOStructPtr->GPIO->CRH &= ~(0xF << ((GPIOStructPtr->GPIO_Pin-8)*4));
 
-		if (GPIOStructPtr->GPIO_Conf == In_PullUp)
-		{
-		// Pullup : bit ODR correspondant à 1
-			MyGPIO_Set(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
-			GPIOStructPtr->GPIO->CRH |= (In_PullDown << (GPIOStructPtr->GPIO_Pin-8)*4);
-		}
-		else if (GPIOStructPtr->GPIO_Conf == In_PullDown)
-		{
-		// Pulldown : bit ODR correspondant à 0
-			MyGPIO_Reset(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
-			GPIOStructPtr->GPIO->CRH |= (In_PullDown << (GPIOStructPtr->GPIO_Pin-8)*4);
-		}
-		else
-		{
-			GPIOStructPtr->GPIO->CRH |= (GPIOStructPtr->GPIO_Conf << (GPIOStructPtr->GPIO_Pin-8)*4);
-		}
+			if (GPIOStructPtr->GPIO_Conf == In_PullUp)
+			{
+					// Pullup : bit ODR correspondant à 1
+						MyGPIO_Set(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
+						GPIOStructPtr->GPIO->CRH |= (In_PullDown << (GPIOStructPtr->GPIO_Pin-8)*4);
+			}
+			else if (GPIOStructPtr->GPIO_Conf == In_PullDown)
+			{
+					// Pulldown : bit ODR correspondant à 0
+						MyGPIO_Reset(GPIOStructPtr->GPIO, GPIOStructPtr->GPIO_Pin);
+						GPIOStructPtr->GPIO->CRH |= (In_PullDown << (GPIOStructPtr->GPIO_Pin-8)*4);
+			}
+			else
+			{
+				GPIOStructPtr->GPIO->CRH |= (GPIOStructPtr->GPIO_Conf << (GPIOStructPtr->GPIO_Pin-8)*4);
+			}
 }		
 			
 }
