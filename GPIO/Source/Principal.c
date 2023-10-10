@@ -11,8 +11,8 @@
 
 int main( void )
 {
-	MyGPIO_Struct_TypeDef GPIOA5 {GPIOA, 5, In_Floating}
-	MyGPIO_Init (GPIOA5)
+	MyGPIO_Struct_TypeDef GPIOA5 = {GPIOC, 13, Out_OD};
+	MyGPIO_Init (&GPIOA5);
 do
 {
 	
