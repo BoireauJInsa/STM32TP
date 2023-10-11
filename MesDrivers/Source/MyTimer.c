@@ -1,4 +1,11 @@
 #include "MyTimer.h"
+
+void ( * ptrFcnTim1 ) ();
+void ( * ptrFcnTim2 ) ();
+void ( * ptrFcnTim3 ) ();
+void ( * ptrFcnTim4 ) ();
+
+
 void MyTimer_Base_Init(MyTimer_Struct_TypeDef * Timer) {
 	
 	if (Timer->Timer == TIM1) {
@@ -12,4 +19,53 @@ void MyTimer_Base_Init(MyTimer_Struct_TypeDef * Timer) {
 	}	
 	Timer->Timer->ARR = Timer->ARR-1; 
 	Timer->Timer->PSC = Timer->PSC-1;
-};
+}
+
+void MyTimer_ActiveIT (TIM_TypeDef * Timer , char Prio, void (*IT_function) (void)){
+	int Tim;
+	
+	if (Timer == TIM1) {
+		Tim = TIM1_UP_IRQn;
+		ptrFcnTim1 = IT_function;
+		
+	}else if (Timer == TIM2) {
+		Tim = TIM2_IRQn;
+		ptrFcnTim2 = IT_function;
+		
+	}else if (Timer == TIM3) {
+		Tim = TIM3_IRQn;
+		ptrFcnTim3 = IT_function;
+		
+	}else if (Timer == TIM4) {
+		Tim = TIM4_IRQn;
+		ptrFcnTim4 = IT_function;
+	}	 
+	
+	
+	NVIC_EnableIRQ(Tim);
+	NVIC_SetPriority (Tim, Prio);
+	Timer->DIER |= TIM_DIER_UIE;
+}
+
+void TIM4_IRQHandler () {
+	TIM4->SR &= ~TIM_SR_UIF;
+	if (ptrFcnTim4 != 0) {(*ptrFcnTim4) ();}
+	}
+
+void TIM3_IRQHandler () {
+	TIM3->SR &= ~TIM_SR_UIF;
+	if (ptrFcnTim3 != 0) {(*ptrFcnTim3) ();}
+	}
+
+void TIM2_IRQHandler () {
+	TIM2->SR &= ~TIM_SR_UIF;
+	if (ptrFcnTim2 != 0) {(*ptrFcnTim2) ();}
+	}
+
+void TIM1_UP_IRQHandler () {
+	TIM1->SR &= ~TIM_SR_UIF;
+	if (ptrFcnTim1 != 0) {(*ptrFcnTim1) ();}
+	}
+
+void MyTimer_PWM( TIM_TypeDef * Timer , char Channel ) {}
+	
