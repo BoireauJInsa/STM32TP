@@ -67,5 +67,39 @@ void TIM1_UP_IRQHandler () {
 	if (ptrFcnTim1 != 0) {(*ptrFcnTim1) ();}
 	}
 
-void MyTimer_PWM( TIM_TypeDef * Timer , char Channel ) {}
+void MyTimer_PWM( TIM_TypeDef * Timer , char Channel ) {
+	switch(Channel) {
+		
+		case 1 :
+				Timer->CCMR1 |= TIM_CCMR1_OC1M;
+				Timer->CCMR1 |= TIM_CCMR1_OC1PE;
+				Timer->CCMR1 &= ~TIM_CCMR1_OC1M_0;
+				Timer->CCER |= TIM_CCER_CC1E;
+				break;
+		case 2 :
+				Timer->CCMR1 |= TIM_CCMR1_OC2M;
+				Timer->CCMR1 |= TIM_CCMR1_OC2PE;
+				Timer->CCMR1 &= ~TIM_CCMR1_OC2M_0;
+				Timer->CCER |= TIM_CCER_CC2E;
+				break;
+		case 3 :
+				Timer->CCMR2 |= TIM_CCMR2_OC3M;
+				Timer->CCMR2 |= TIM_CCMR2_OC3PE;
+				Timer->CCMR2 &= ~TIM_CCMR2_OC3M_0;
+				Timer->CCER |= TIM_CCER_CC3E;
+				break;
+		case 4 :
+				Timer->CCMR2 |= TIM_CCMR2_OC4M;
+				Timer->CCMR2 |= TIM_CCMR2_OC4PE;
+				Timer->CCMR2 &= ~TIM_CCMR2_OC4M_0;
+				Timer->CCER |= TIM_CCER_CC4E;
+				break;
+		default:
+				break;
+		
+	Timer->CR1 |= TIM_CR1_ARPE;
+	Timer->CR1 &= ~TIM_CR1_DIR;
+	Timer->EGR |= TIM_EGR_UG;
+	}
+}
 	

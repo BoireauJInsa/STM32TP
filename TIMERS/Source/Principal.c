@@ -19,7 +19,7 @@ void CallBack( void ) {
 
 int main( void )
   {
-	MyTimer_Struct_TypeDef MyTim2 = {TIM2, 100, 50};
+	MyTimer_Struct_TypeDef MyTim2 = {TIM2, 72, 10};
 	MyTimer_Struct_TypeDef MyTim3 = {TIM3, 3600, 10000};
 	MyGPIO_Struct_TypeDef GPIOA5 = {GPIOA, 5, Out_Ppull};
 	
@@ -29,12 +29,8 @@ int main( void )
 	MyGPIO_Init(&GPIOA5);
 	
 	MyTimer_ActiveIT(TIM3, 5, CallBack);
-	
-	
-	
-	TIM2->CCMR1 |= TIM_CCMR1_OC1M;
-	TIM2->CCMR1 |= TIM_CCMR1_OC1PE;
-	TIM2->EGR |= TIM_EGR_UG;
+	TIM2->CCR1 |= 72 * 20/100;
+	MyTimer_PWM( TIM2 , 1 ) ;
 	
 	MyTimer_Base_Init(&MyTim2);
 	MyTimer_Base_Start(MyTim2.Timer);
