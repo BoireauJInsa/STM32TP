@@ -28,9 +28,8 @@ int main( void )
 	
 	MyGPIO_Init(&GPIOA5);
 	
-	MyTimer_ActiveIT(TIM3, 5, CallBack);
-	TIM2->CCR1 |= 72 * 20/100;
-	MyTimer_PWM( TIM2 , 1 ) ;
+	MyTimer_ActiveIT(MyTim3.Timer, 5, CallBack);
+	MyTimer_PWM(&MyTim2 , 1 ) ;
 	
 	MyTimer_Base_Init(&MyTim2);
 	MyTimer_Base_Start(MyTim2.Timer);

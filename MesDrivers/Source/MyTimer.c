@@ -67,39 +67,59 @@ void TIM1_UP_IRQHandler () {
 	if (ptrFcnTim1 != 0) {(*ptrFcnTim1) ();}
 	}
 
-void MyTimer_PWM( TIM_TypeDef * Timer , char Channel ) {
+void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel ) {
 	switch(Channel) {
 		
 		case 1 :
-				Timer->CCMR1 |= TIM_CCMR1_OC1M;
-				Timer->CCMR1 |= TIM_CCMR1_OC1PE;
-				Timer->CCMR1 &= ~TIM_CCMR1_OC1M_0;
-				Timer->CCER |= TIM_CCER_CC1E;
+				Timer->Timer->CCMR1 |= TIM_CCMR1_OC1M;
+				Timer->Timer->CCMR1 |= TIM_CCMR1_OC1PE;
+				Timer->Timer->CCMR1 &= ~TIM_CCMR1_OC1M_0;
+				Timer->Timer->CCER |= TIM_CCER_CC1E;
 				break;
 		case 2 :
-				Timer->CCMR1 |= TIM_CCMR1_OC2M;
-				Timer->CCMR1 |= TIM_CCMR1_OC2PE;
-				Timer->CCMR1 &= ~TIM_CCMR1_OC2M_0;
-				Timer->CCER |= TIM_CCER_CC2E;
+				Timer->Timer->CCMR1 |= TIM_CCMR1_OC2M;
+				Timer->Timer->CCMR1 |= TIM_CCMR1_OC2PE;
+				Timer->Timer->CCMR1 &= ~TIM_CCMR1_OC2M_0;
+				Timer->Timer->CCER |= TIM_CCER_CC2E;
 				break;
 		case 3 :
-				Timer->CCMR2 |= TIM_CCMR2_OC3M;
-				Timer->CCMR2 |= TIM_CCMR2_OC3PE;
-				Timer->CCMR2 &= ~TIM_CCMR2_OC3M_0;
-				Timer->CCER |= TIM_CCER_CC3E;
+				Timer->Timer->CCMR2 |= TIM_CCMR2_OC3M;
+				Timer->Timer->CCMR2 |= TIM_CCMR2_OC3PE;
+				Timer->Timer->CCMR2 &= ~TIM_CCMR2_OC3M_0;
+				Timer->Timer->CCER |= TIM_CCER_CC3E;
 				break;
 		case 4 :
-				Timer->CCMR2 |= TIM_CCMR2_OC4M;
-				Timer->CCMR2 |= TIM_CCMR2_OC4PE;
-				Timer->CCMR2 &= ~TIM_CCMR2_OC4M_0;
-				Timer->CCER |= TIM_CCER_CC4E;
+				Timer->Timer->CCMR2 |= TIM_CCMR2_OC4M;
+				Timer->Timer->CCMR2 |= TIM_CCMR2_OC4PE;
+				Timer->Timer->CCMR2 &= ~TIM_CCMR2_OC4M_0;
+				Timer->Timer->CCER |= TIM_CCER_CC4E;
 				break;
 		default:
 				break;
-		
-	Timer->CR1 |= TIM_CR1_ARPE;
-	Timer->CR1 &= ~TIM_CR1_DIR;
-	Timer->EGR |= TIM_EGR_UG;
 	}
+	Timer->Timer->CR1 |= TIM_CR1_ARPE;
+	Timer->Timer->CR1 &= ~TIM_CR1_DIR;
+	Timer->Timer->EGR |= TIM_EGR_UG;
+	Edit_PWM_DutyCycle(Timer, Channel, 50);
 }
-	
+
+void Edit_PWM_DutyCycle( MyTimer_Struct_TypeDef * Timer , char Channel, int DutyCycle) {
+		switch(Channel) {
+			
+			case 1 :
+					Timer->Timer->CCR1 |= Timer->ARR * DutyCycle/100;
+					break;
+			case 2 :
+					Timer->Timer->CCR2 |= Timer->ARR * DutyCycle/100;
+					break;
+			case 3 :
+					Timer->Timer->CCR3 |= Timer->ARR * DutyCycle/100;
+					break;
+			case 4 :
+					Timer->Timer->CCR4 |= Timer->ARR * DutyCycle/100;
+					break;
+			default:
+					break;
+		}
+}
+
