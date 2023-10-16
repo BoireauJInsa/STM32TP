@@ -75,7 +75,6 @@ void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel ) {
 				Timer->Timer->CCMR1 |= TIM_CCMR1_OC1PE;
 				Timer->Timer->CCMR1 &= ~TIM_CCMR1_OC1M_0;
 				Timer->Timer->CCER |= TIM_CCER_CC1E;
-				Timer->Timer->BDTR |= TIM_BDTR_MOE;
 				break;
 		case 2 :
 				Timer->Timer->CCMR1 |= TIM_CCMR1_OC2M;
@@ -98,25 +97,32 @@ void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel ) {
 		default:
 				break;
 	}
+	if (Timer->Timer == TIM1) {
+			Timer->Timer->BDTR |= TIM_BDTR_MOE;
+	}
 	Timer->Timer->CR1 |= TIM_CR1_ARPE;
 	Timer->Timer->CR1 &= ~TIM_CR1_DIR;
 	Timer->Timer->EGR |= TIM_EGR_UG;
-	Edit_PWM_DutyCycle(Timer, Channel, 50);
+	MyTimer_Edit_PWM_DutyCycle(Timer, Channel, 75);
 }
 
-void Edit_PWM_DutyCycle( MyTimer_Struct_TypeDef * Timer , char Channel, int DutyCycle) {
+void MyTimer_Edit_PWM_DutyCycle( MyTimer_Struct_TypeDef * Timer , char Channel, int DutyCycle) {
 		switch(Channel) {
 			
 			case 1 :
+					Timer->Timer->CCR1 &= 0;
 					Timer->Timer->CCR1 |= Timer->ARR * DutyCycle/100;
 					break;
 			case 2 :
+					Timer->Timer->CCR2 &= 0;
 					Timer->Timer->CCR2 |= Timer->ARR * DutyCycle/100;
 					break;
 			case 3 :
+					Timer->Timer->CCR3 &= 0;
 					Timer->Timer->CCR3 |= Timer->ARR * DutyCycle/100;
 					break;
 			case 4 :
+					Timer->Timer->CCR4 &= 0;
 					Timer->Timer->CCR4 |= Timer->ARR * DutyCycle/100;
 					break;
 			default:

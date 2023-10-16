@@ -18,23 +18,17 @@ void CallBack( void ) {
 
 
 int main( void )
-  {
+   {
 	MyTimer_Struct_TypeDef MyTim2 = {TIM2, 72, 10};
-	MyTimer_Struct_TypeDef MyTim3 = {TIM3, 3600, 10000};
-	MyGPIO_Struct_TypeDef GPIOA5 = {GPIOA, 5, Out_Ppull};
+	MyGPIO_Struct_TypeDef GPIOA0 = {GPIOA, 0, AltOut_Ppull};
 	
-	MyTimer_Base_Init(&MyTim3);
-	MyTimer_Base_Start(MyTim3.Timer);
-	
-	MyGPIO_Init(&GPIOA5);
-	
-	MyTimer_ActiveIT(MyTim3.Timer, 5, CallBack);
-	MyTimer_PWM(&MyTim2 , 1 ) ;
+	MyGPIO_Init(&GPIOA0);
 	
 	MyTimer_Base_Init(&MyTim2);
+	MyTimer_PWM(&MyTim2 , 1);
 	MyTimer_Base_Start(MyTim2.Timer);
 	
-	
+	MyTimer_Edit_PWM_DutyCycle(&MyTim2, 1, 33);
 	
 	
 

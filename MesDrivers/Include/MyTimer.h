@@ -23,7 +23,7 @@ void TIM3_IRQHandler (void);
 void TIM2_IRQHandler (void);
 void TIM1_UP_IRQHandler (void);
 void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel);
-void Edit_PWM_DutyCycle( MyTimer_Struct_TypeDef * Timer , char Channel, int DutyCycle);
+void MyTimer_Edit_PWM_DutyCycle( MyTimer_Struct_TypeDef * Timer , char Channel, int DutyCycle);
 #define MyTimer_Base_Start(Timer) Timer->CR1 |= TIM_CR1_CEN;
 #define MyTimer_Base_Stop(Timer) Timer->CR1 |= 0x0000;
 #endif
