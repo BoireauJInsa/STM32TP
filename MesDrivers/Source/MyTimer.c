@@ -75,6 +75,7 @@ void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel ) {
 				Timer->Timer->CCMR1 |= TIM_CCMR1_OC1PE;
 				Timer->Timer->CCMR1 &= ~TIM_CCMR1_OC1M_0;
 				Timer->Timer->CCER |= TIM_CCER_CC1E;
+				Timer->Timer->BDTR |= TIM_BDTR_MOE;
 				break;
 		case 2 :
 				Timer->Timer->CCMR1 |= TIM_CCMR1_OC2M;
