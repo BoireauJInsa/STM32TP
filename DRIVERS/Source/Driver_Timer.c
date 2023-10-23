@@ -1,4 +1,4 @@
-#include "MyTimer.h"
+#include "Driver_Timer.h"
 
 void ( * ptrFcnTim1 ) ();
 void ( * ptrFcnTim2 ) ();
@@ -6,7 +6,7 @@ void ( * ptrFcnTim3 ) ();
 void ( * ptrFcnTim4 ) ();
 
 
-void MyTimer_Base_Init(MyTimer_Struct_TypeDef * Timer) {
+void Timer_Base_Init(Timer_Struct_TypeDef * Timer) {
 	
 	if (Timer->Timer == TIM1) {
 		RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
@@ -21,7 +21,7 @@ void MyTimer_Base_Init(MyTimer_Struct_TypeDef * Timer) {
 	Timer->Timer->PSC = Timer->PSC-1;
 }
 
-void MyTimer_ActiveIT (TIM_TypeDef * Timer , char Prio, void (*IT_function) (void)){
+void Timer_ActiveIT (TIM_TypeDef * Timer , char Prio, void (*IT_function) (void)){
 	int Tim;
 	
 	if (Timer == TIM1) {
@@ -67,7 +67,7 @@ void TIM1_UP_IRQHandler () {
 	if (ptrFcnTim1 != 0) {(*ptrFcnTim1) ();}
 	}
 
-void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel ) {
+void Timer_PWM( Timer_Struct_TypeDef * Timer , char Channel ) {
 	switch(Channel) {
 		
 		case 1 :
@@ -103,10 +103,10 @@ void MyTimer_PWM( MyTimer_Struct_TypeDef * Timer , char Channel ) {
 	Timer->Timer->CR1 |= TIM_CR1_ARPE;
 	Timer->Timer->CR1 &= ~TIM_CR1_DIR;
 	Timer->Timer->EGR |= TIM_EGR_UG;
-	MyTimer_Edit_PWM_DutyCycle(Timer, Channel, 75);
+	Timer_Edit_PWM_DutyCycle(Timer, Channel, 75);
 }
 
-void MyTimer_Edit_PWM_DutyCycle( MyTimer_Struct_TypeDef * Timer , char Channel, int DutyCycle) {
+void Timer_Edit_PWM_DutyCycle( Timer_Struct_TypeDef * Timer , char Channel, int DutyCycle) {
 		switch(Channel) {
 			
 			case 1 :
